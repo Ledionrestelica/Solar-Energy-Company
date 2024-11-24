@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import toast from "react-hot-toast";
+import { Progress } from "@/components/ui/progress";
 
 const Form1 = () => {
   const router = useRouter();
@@ -32,31 +33,46 @@ const Form1 = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [progress, setProgress] = useState(0);
 
-  function handleSubmit() {
-    console.log(
-      "data" + option1,
-      option2,
-      option3,
-      option4,
-      option5,
-      option6,
-      option7,
-      option8,
-      option9,
-      gatuadress,
-      gatunr,
-      postnummer,
-      name,
-      email,
-      phone
-    );
-    setTimeout(() => {
-      toast.success("Submitted Succesfully");
-    }, 3000);
-    setTimeout(() => {
-      router.push("/thank-you");
-    }, 1000);
+  function handleSubmit(e: any) {
+    e.preventDefault();
+
+    const formData = {
+      "Type of Building": option1,
+      "Where should they be installed": option2,
+      "Do you know the area covered": option3,
+      "Approx area": option4,
+      "Do you know Elctricity Consumption": option5,
+      "Electricity consumption": option6,
+      "Excess electricity sold to grid?": option7,
+      "Do you want offers": option8,
+      Kommentarer: option9,
+      Address: gatuadress,
+      Gatunummer: gatunr,
+      Postnummer: postnummer,
+      Name: name,
+      Email: email,
+      Phone: phone,
+    };
+
+    fetch("/api/send-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => {
+        if (res.ok) {
+          toast.success("Form submitted successfully!");
+          router.push("/thank-you");
+        } else {
+          toast.error("Failed to send email.");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error("Something went wrong.");
+      });
   }
 
   console.log(
@@ -206,12 +222,16 @@ const Form1 = () => {
       )}
       {step === 2 && (
         <div>
+          <Progress className="[&>div]:bg-primary my-5" value={progress} />
           <p className="text-[16px] font-medium mb-[31px]">
             Do you know approximately how large an area can be covered by solar
             cells?
           </p>
           <RadioGroup
-            onValueChange={(value) => setOption3(value)}
+            onValueChange={(value) => {
+              setOption3(value);
+              setProgress(progress + 5.88);
+            }}
             value={option3}
             className="flex gap-8"
           >
@@ -232,7 +252,9 @@ const Form1 = () => {
               className="py-6 rounded-[8px] relative border-none focus-visible:ring-0"
               placeholder="123"
               disabled={option3 === "no"}
-              onChange={(e) => setOption4(e.target.value)}
+              onChange={(e) => {
+                setOption4(e.target.value), setProgress(progress + 5.88);
+              }}
             ></Input>
             <p className="text-[#1A9BA7]">kwm</p>
           </div>
@@ -242,7 +264,9 @@ const Form1 = () => {
           </p>
           <RadioGroup
             value={option5}
-            onValueChange={(value) => setOption5(value)}
+            onValueChange={(value) => {
+              setOption5(value), setProgress(progress + 5.88);
+            }}
             className="flex gap-8"
           >
             <div className="flex gap-2  items-center justify-center">
@@ -263,7 +287,9 @@ const Form1 = () => {
               placeholder="123"
               disabled={option5 === "no"}
               value={option6}
-              onChange={(e) => setOption6(e.target.value)}
+              onChange={(e) => {
+                setOption6(e.target.value);
+              }}
             ></Input>
             <p className="text-[#1A9BA7]">kWh</p>
           </div>
@@ -416,7 +442,7 @@ const Form1 = () => {
             )}
             type="button"
             onClick={() => setStep(4)}
-            disabled={!option7 || !option8 || !option9}
+            disabled={!option7 || !option8}
           >
             Next
           </button>

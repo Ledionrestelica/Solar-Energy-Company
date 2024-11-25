@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/lib/utils";
@@ -24,9 +26,6 @@ const Form1 = () => {
   const [option4, setOption4] = useState("");
   const [option5, setOption5] = useState("");
   const [option6, setOption6] = useState("");
-  const [option7, setOption7] = useState("");
-  const [option8, setOption8] = useState("");
-  const [option9, setOption9] = useState("");
   const [gatuadress, setGatu] = useState("");
   const [gatunr, setGatunr] = useState("");
   const [postnummer, setPostNummer] = useState("");
@@ -35,19 +34,26 @@ const Form1 = () => {
   const [phone, setPhone] = useState("");
   const [progress, setProgress] = useState(0);
 
+  useEffect(() => {
+    const heroElement = document.getElementById("hero");
+
+    if (step === 1 && heroElement) {
+      heroElement.style.display = "";
+    } else if (heroElement) {
+      heroElement.style.display = "none";
+    }
+  }, [step]);
+
   function handleSubmit(e: any) {
     e.preventDefault();
 
     const formData = {
-      "Type of Building": option1,
-      "Where should they be installed": option2,
-      "Do you know the area covered": option3,
-      "Approx area": option4,
-      "Do you know Elctricity Consumption": option5,
-      "Electricity consumption": option6,
-      "Excess electricity sold to grid?": option7,
-      "Do you want offers": option8,
-      Kommentarer: option9,
+      "Vänligen välj vilken typ av anläggning det gäller?": option1,
+      "Vad är du intresserad av?": option2,
+      "Är ni två personer som äger fastigheten?": option3,
+      "Är det viktigt för er med långa garantier?": option4,
+      "Vill ni ha en helhetslösning med batteri?": option5,
+      "Är det viktigt med Europeiska leverantörer?": option6,
       Address: gatuadress,
       Gatunummer: gatunr,
       Postnummer: postnummer,
@@ -56,7 +62,7 @@ const Form1 = () => {
       Phone: phone,
     };
 
-    fetch("https://timi-form.vercel.app/api/send-email", {
+    fetch("https://solprice.se/api/send-email", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
@@ -82,9 +88,6 @@ const Form1 = () => {
     option4,
     option5,
     option6,
-    option7,
-    option8,
-    option9,
     gatuadress,
     gatunr,
     postnummer,
@@ -94,11 +97,11 @@ const Form1 = () => {
   );
 
   return (
-    <form className="px-2 py-5 min-h-screen">
+    <form className="min-h-screen px-[10px] md:px-[20px] lg:px-[70px] w-full mt-[50px]">
       {step === 1 && (
         <div id="step-1">
           <p className="font-medium text-[16px] mb-6">
-            For what type of building should the solar cells be used?
+            Vänligen välj vilken typ av anläggning det gäller?
           </p>
           <RadioGroup
             className="gap-4"
@@ -132,48 +135,6 @@ const Form1 = () => {
             >
               <RadioGroupItem
                 className="rounded-[6px]"
-                value="garage"
-                id="r2"
-              />
-              <Label
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  padding: "12px 0px",
-                  cursor: "pointer",
-                }}
-                htmlFor="r2"
-              >
-                Garage
-              </Label>
-            </div>
-            <div
-              className={cn(
-                "flex border border-[#CDD6DF] px-2 items-center space-x-2 rounded-[12px] cursor-pointer",
-                "[&:has(input:checked)]:border-[#1A9BA7]"
-              )}
-            >
-              <RadioGroupItem className="rounded-[6px]" value="flera" id="r3" />
-              <Label
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  padding: "12px 0px",
-                  cursor: "pointer",
-                }}
-                htmlFor="r3"
-              >
-                Flera
-              </Label>
-            </div>
-            <div
-              className={cn(
-                "flex border border-[#CDD6DF] px-2 items-center space-x-2 rounded-[12px] cursor-pointer",
-                "[&:has(input:checked)]:border-[#1A9BA7]"
-              )}
-            >
-              <RadioGroupItem
-                className="rounded-[6px]"
                 value="lantbruk"
                 id="r4"
               />
@@ -191,18 +152,83 @@ const Form1 = () => {
             </div>
           </RadioGroup>
           <p className="font-medium text-[16px] mt-6 mb-2">
-            Where should the solar cells be installed?
+            Vad är du intresserad av?
           </p>
-          <Select onValueChange={(value) => setOption2(value)} value={option2}>
-            <SelectTrigger className="border-[#CDD6DF] rounded-[6px] py-3">
-              <SelectValue className="py-3" placeholder="Select installation" />
-            </SelectTrigger>
-            <SelectContent className="rounded-[6px] border-[#CDD6DF]">
-              <SelectItem value="top">Top</SelectItem>
-              <SelectItem value="bottom">Bottom</SelectItem>
-              <SelectItem value="sideways">Sideways</SelectItem>
-            </SelectContent>
-          </Select>
+          <RadioGroup
+            className="gap-4"
+            value={option2}
+            onValueChange={(value) => setOption2(value)}
+          >
+            <div
+              className={cn(
+                "flex border border-[#CDD6DF] px-2 items-center space-x-2 rounded-[12px] cursor-pointer",
+                "[&:has(input:checked)]:border-[#1A9BA7]"
+              )}
+            >
+              <RadioGroupItem
+                className="rounded-[6px]"
+                value="solceller"
+                id="solceller"
+              />
+              <Label
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  padding: "12px 0px",
+                  cursor: "pointer",
+                }}
+                htmlFor="solceller"
+              >
+                Solceller
+              </Label>
+            </div>
+            <div
+              className={cn(
+                "flex border border-[#CDD6DF] px-2 items-center space-x-2 rounded-[12px] cursor-pointer",
+                "[&:has(input:checked)]:border-[#1A9BA7]"
+              )}
+            >
+              <RadioGroupItem
+                className="rounded-[6px]"
+                value="batteri"
+                id="batteri"
+              />
+              <Label
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  padding: "12px 0px",
+                  cursor: "pointer",
+                }}
+                htmlFor="batteri"
+              >
+                Batteri
+              </Label>
+            </div>
+            <div
+              className={cn(
+                "flex border border-[#CDD6DF] px-2 items-center space-x-2 rounded-[12px] cursor-pointer",
+                "[&:has(input:checked)]:border-[#1A9BA7]"
+              )}
+            >
+              <RadioGroupItem
+                className="rounded-[6px]"
+                value="laddbox"
+                id="laddbox"
+              />
+              <Label
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  padding: "12px 0px",
+                  cursor: "pointer",
+                }}
+                htmlFor="laddbox"
+              >
+                Laddbox
+              </Label>
+            </div>
+          </RadioGroup>
           <button
             type="button"
             onClick={() => setStep(2)}
@@ -222,10 +248,19 @@ const Form1 = () => {
       )}
       {step === 2 && (
         <div>
-          <Progress className="[&>div]:bg-primary my-5" value={progress} />
+          <div className="flex flex-col">
+            {progress < 30 && (
+              <p className="self-end text-primary text-[16px]">
+                You can do this!
+              </p>
+            )}
+            {progress > 30 && (
+              <p className="self-end text-primary text-[16px]">Nearly there</p>
+            )}
+            <Progress className="[&>div]:bg-primary my-5" value={progress} />
+          </div>
           <p className="text-[16px] font-medium mb-[31px]">
-            Do you know approximately how large an area can be covered by solar
-            cells?
+            Är ni två personer som äger fastigheten?
           </p>
           <RadioGroup
             onValueChange={(value) => {
@@ -245,22 +280,27 @@ const Form1 = () => {
             </div>
           </RadioGroup>
           <p className="text-[16px] font-medium mt-[40px] mb-[31px]">
-            Approximately how big is the area?
+            Är det viktigt för er med långa garantier?
           </p>
-          <div className="flex border border-[#CDD6DF] items-center rounded-[12px] px-4 w-[200px]">
-            <Input
-              className="py-6 rounded-[8px] relative border-none focus-visible:ring-0"
-              placeholder="123"
-              disabled={option3 === "no"}
-              onChange={(e) => {
-                setOption4(e.target.value), setProgress(progress + 5.88);
-              }}
-            ></Input>
-            <p className="text-[#1A9BA7]">kwm</p>
-          </div>
+          <RadioGroup
+            onValueChange={(value) => {
+              setOption4(value);
+              setProgress(progress + 5.88);
+            }}
+            value={option4}
+            className="flex gap-8"
+          >
+            <div className="flex gap-2  items-center justify-center">
+              <RadioGroupItem value="yes" id="r-5"></RadioGroupItem>
+              <Label>Yes</Label>
+            </div>
+            <div className="flex gap-2 items-center justify-center">
+              <RadioGroupItem value="no" id="r-6"></RadioGroupItem>
+              <Label>No</Label>
+            </div>
+          </RadioGroup>
           <p className="text-[16px] font-medium mt-[30px] mb-[31px]">
-            Do you know approximately the annual electricity consumption in the
-            building?
+            Vill ni ha en helhetslösning med batteri?
           </p>
           <RadioGroup
             value={option5}
@@ -279,20 +319,24 @@ const Form1 = () => {
             </div>
           </RadioGroup>
           <p className="text-[16px] font-medium mt-[40px] mb-[31px]">
-            Approximately how big is the area?
+            Är det viktigt med Europeiska leverantörer?
           </p>
-          <div className="flex border border-[#CDD6DF] items-center rounded-[12px] px-4 w-[200px]">
-            <Input
-              className="py-6 rounded-[8px] relative border-none focus-visible:ring-0"
-              placeholder="123"
-              disabled={option5 === "no"}
-              value={option6}
-              onChange={(e) => {
-                setOption6(e.target.value);
-              }}
-            ></Input>
-            <p className="text-[#1A9BA7]">kWh</p>
-          </div>
+          <RadioGroup
+            value={option6}
+            onValueChange={(value) => {
+              setOption6(value), setProgress(progress + 5.88);
+            }}
+            className="flex gap-8"
+          >
+            <div className="flex gap-2  items-center justify-center">
+              <RadioGroupItem value="yes" id="r-6"></RadioGroupItem>
+              <Label>Yes</Label>
+            </div>
+            <div className="flex gap-2 items-center justify-center">
+              <RadioGroupItem value="no" id="r-8"></RadioGroupItem>
+              <Label>No</Label>
+            </div>
+          </RadioGroup>
           <button
             className={cn(
               "w-full text-lg py-3 font-medium mt-6 rounded-full",
@@ -306,150 +350,19 @@ const Form1 = () => {
           </button>
         </div>
       )}
-      {step === 3 && (
-        <div>
-          <p className="text-[16px] font-medium mb-[31px]">
-            Should excess electricity from the solar cells be sold via the grid?
-          </p>
-          <RadioGroup
-            value={option7}
-            onValueChange={(value) => setOption7(value)}
-            className="flex gap-8"
-          >
-            <div className="flex gap-2  items-center justify-center">
-              <RadioGroupItem value="yes" id="r-5"></RadioGroupItem>
-              <Label>Yes</Label>
-            </div>
-            <div className="flex gap-2 items-center justify-center">
-              <RadioGroupItem value="no" id="r-6"></RadioGroupItem>
-              <Label>No</Label>
-            </div>
-          </RadioGroup>
-          <p className="text-[16px] font-medium mt-[30px] mb-[31px]">
-            Do you also want offers on one or more of the following?
-          </p>
-          <RadioGroup
-            value={option8}
-            onValueChange={(value) => setOption8(value)}
-            className="gap-4"
-          >
-            <div
-              className={cn(
-                "flex border border-[#CDD6DF] px-2 items-center space-x-2 rounded-[12px] cursor-pointer",
-                "[&:has(input:checked)]:border-[#1A9BA7]"
-              )}
-            >
-              <RadioGroupItem
-                className="rounded-[6px]"
-                value="villa"
-                id="step3-1"
-              />
-              <Label
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  padding: "12px 0px",
-                  cursor: "pointer",
-                }}
-                htmlFor="step3-1"
-              >
-                Villa
-              </Label>
-            </div>
-            <div
-              className={cn(
-                "flex border border-[#CDD6DF] px-2 items-center space-x-2 rounded-[12px] cursor-pointer",
-                "[&:has(input:checked)]:border-[#1A9BA7]"
-              )}
-            >
-              <RadioGroupItem
-                className="rounded-[6px]"
-                value="garage"
-                id="step3-2"
-              />
-              <Label
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  padding: "12px 0px",
-                  cursor: "pointer",
-                }}
-                htmlFor="step3-2"
-              >
-                Garage
-              </Label>
-            </div>
-            <div
-              className={cn(
-                "flex border border-[#CDD6DF] px-2 items-center space-x-2 rounded-[12px] cursor-pointer",
-                "[&:has(input:checked)]:border-[#1A9BA7]"
-              )}
-            >
-              <RadioGroupItem
-                className="rounded-[6px]"
-                value="flera"
-                id="step3-3"
-              />
-              <Label
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  padding: "12px 0px",
-                  cursor: "pointer",
-                }}
-                htmlFor="step3-3"
-              >
-                Flera
-              </Label>
-            </div>
-            <div
-              className={cn(
-                "flex border border-[#CDD6DF] px-2 items-center space-x-2 rounded-[12px] cursor-pointer",
-                "[&:has(input:checked)]:border-[#1A9BA7]"
-              )}
-            >
-              <RadioGroupItem
-                className="rounded-[6px]"
-                value="lantbruk"
-                id="step3-4"
-              />
-              <Label
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  padding: "12px 0px",
-                  cursor: "pointer",
-                }}
-                htmlFor="step3-4"
-              >
-                Lantbruk
-              </Label>
-            </div>
-          </RadioGroup>
-          <p className="text-[16px] font-medium mt-[30px] mb-[10px]">
-            Kommentarer (frivilligt)
-          </p>
-          <Textarea
-            className="border border-[#CDD6DF] rounded-[12px] focus-visible:ring-0"
-            placeholder="Kommentarer"
-            onChange={(e) => setOption9(e.target.value)}
-            rows={4}
-          ></Textarea>
-          <button
-            className={cn(
-              "w-full text-lg py-3 font-medium mt-6 rounded-full",
-              "bg-primary text-white"
-            )}
-            type="button"
-            onClick={() => setStep(4)}
-            disabled={!option7 || !option8}
-          >
-            Next
-          </button>
-        </div>
-      )}
-      {step == 4 && (
+      {step == 3 && (
         <div className="space-y-8">
+          <div className="flex flex-col">
+            {progress < 30 && (
+              <p className="self-end text-primary text-[16px]">
+                You can do this!
+              </p>
+            )}
+            {progress > 30 && (
+              <p className="self-end text-primary text-[16px]">Nearly there</p>
+            )}
+            <Progress className="[&>div]:bg-primary my-5" value={progress} />
+          </div>
           <div className="flex gap-4">
             <div className="flex flex-col gap-2">
               <p className="font-medium text-[16px]">Address</p>

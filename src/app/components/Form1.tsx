@@ -393,7 +393,7 @@ const Form1 = () => {
             />
           </div>
           <div className="flex flex-col">
-            <p className="font-medium text-[16px]">Enter your fullname</p>
+            <p className="font-medium text-[16px]">Namn</p>
             <Input
               onChange={(e) => setName(e.target.value)}
               required
@@ -402,7 +402,7 @@ const Form1 = () => {
             />
           </div>
           <div className="flex flex-col">
-            <p className="font-medium text-[16px]">E-Mail Address</p>
+            <p className="font-medium text-[16px]">Mejladress</p>
             <Input
               onChange={(e) => setEmail(e.target.value)}
               type="email"
@@ -412,7 +412,7 @@ const Form1 = () => {
             />
           </div>
           <div className="flex flex-col">
-            <p className="font-medium text-[16px]">Phone Number</p>
+            <p className="font-medium text-[16px]">Telefon</p>
             <Input
               onChange={(e) => setPhone(e.target.value)}
               required

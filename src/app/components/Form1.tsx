@@ -242,7 +242,7 @@ const Form1 = () => {
               }
             )}
           >
-            Next
+            NÄSTA
           </button>
         </div>
       )}
@@ -272,11 +272,11 @@ const Form1 = () => {
           >
             <div className="flex gap-2  items-center justify-center">
               <RadioGroupItem value="yes" id="r-5"></RadioGroupItem>
-              <Label>Yes</Label>
+              <Label>Ja</Label>
             </div>
             <div className="flex gap-2 items-center justify-center">
               <RadioGroupItem value="no" id="r-6"></RadioGroupItem>
-              <Label>No</Label>
+              <Label>Nej</Label>
             </div>
           </RadioGroup>
           <p className="text-[16px] font-medium mt-[40px] mb-[31px]">
@@ -292,11 +292,11 @@ const Form1 = () => {
           >
             <div className="flex gap-2  items-center justify-center">
               <RadioGroupItem value="yes" id="r-5"></RadioGroupItem>
-              <Label>Yes</Label>
+              <Label>Ja</Label>
             </div>
             <div className="flex gap-2 items-center justify-center">
               <RadioGroupItem value="no" id="r-6"></RadioGroupItem>
-              <Label>No</Label>
+              <Label>Nej</Label>
             </div>
           </RadioGroup>
           <p className="text-[16px] font-medium mt-[30px] mb-[31px]">
@@ -311,11 +311,11 @@ const Form1 = () => {
           >
             <div className="flex gap-2  items-center justify-center">
               <RadioGroupItem value="yes" id="r-6"></RadioGroupItem>
-              <Label>Yes</Label>
+              <Label>Ja</Label>
             </div>
             <div className="flex gap-2 items-center justify-center">
               <RadioGroupItem value="no" id="r-8"></RadioGroupItem>
-              <Label>No</Label>
+              <Label>Nej</Label>
             </div>
           </RadioGroup>
           <p className="text-[16px] font-medium mt-[40px] mb-[31px]">
@@ -330,11 +330,11 @@ const Form1 = () => {
           >
             <div className="flex gap-2  items-center justify-center">
               <RadioGroupItem value="yes" id="r-6"></RadioGroupItem>
-              <Label>Yes</Label>
+              <Label>Ja</Label>
             </div>
             <div className="flex gap-2 items-center justify-center">
               <RadioGroupItem value="no" id="r-8"></RadioGroupItem>
-              <Label>No</Label>
+              <Label>Nej</Label>
             </div>
           </RadioGroup>
           <button
@@ -346,21 +346,13 @@ const Form1 = () => {
             disabled={!option3 || !option4 || !option5}
             onClick={() => setStep(3)}
           >
-            Next
+            NÄSTA
           </button>
         </div>
       )}
       {step == 3 && (
         <div className="space-y-8">
           <div className="flex flex-col">
-            {progress < 30 && (
-              <p className="self-end text-primary text-[16px]">
-                You can do this!
-              </p>
-            )}
-            {progress > 30 && (
-              <p className="self-end text-primary text-[16px]">Nearly there</p>
-            )}
             <Progress className="[&>div]:bg-primary my-5" value={progress} />
           </div>
           <div className="flex gap-4">

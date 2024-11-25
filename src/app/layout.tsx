@@ -18,8 +18,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Solpricer - Get the best solution for your solar panels",
-  description: "Talk to the best proffesionals that can give solutions.",
+  title: "Solpricer",
+  description: "Solpricer - få hjälp av våra professionella solcellsrådgivare",
 };
 
 export default function RootLayout({

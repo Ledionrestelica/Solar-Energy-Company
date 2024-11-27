@@ -62,7 +62,7 @@ const Form1 = () => {
       Phone: phone,
     };
 
-    fetch("https://solpricer.se/api/send-email", {
+    fetch("http://solpricer.se/api/send-email", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),

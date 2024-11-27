@@ -4,6 +4,33 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
+    // Generate table rows from the body object
+    const generateTableRows = (data: Record<string, any>) => {
+      return Object.entries(data)
+        .map(
+          ([key, value]) =>
+            `<tr><td style="border: 1px solid #ddd; padding: 8px;">${key}</td><td style="border: 1px solid #ddd; padding: 8px;">${value}</td></tr>`
+        )
+        .join("");
+    };
+
+    const tableContent = generateTableRows(body);
+
+    // Email HTML with a table
+    const emailHTML = `
+      <table style="border-collapse: collapse; width: 100%; max-width: 600px;">
+        <thead>
+          <tr>
+            <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Field</th>
+            <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${tableContent}
+        </tbody>
+      </table>
+    `;
+
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 465,
@@ -14,13 +41,11 @@ export async function POST(req: Request) {
       },
     });
 
-    // Email options
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: "ledionres@gmail.com", // Replace with the recipient's email
+      to: "woilamania@gmail.com",
       subject: "New Form Submission",
-      text: JSON.stringify(body, null, 2), // Send data in plain text format
-      html: `<pre>${JSON.stringify(body, null, 2)}</pre>`, // Send data in a prettier HTML format
+      html: emailHTML,
     };
 
     // Send email

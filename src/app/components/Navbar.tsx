@@ -37,7 +37,7 @@ const Navbar = () => {
 
       <div className="hidden md:flex justify-end gap-28 flex-1 text-[#334155]">
         <Link href="/about-us">
-          <p>About us</p>
+          <p>Om OSS</p>
         </Link>
         <p>Blog</p>
       </div>

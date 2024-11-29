@@ -28,8 +28,7 @@ const Navbar = () => {
               <Image width={30} height={30} alt="Logo" src="/Logo.jpg"></Image>
             </SheetTitle>
             <div className="flex flex-col gap-3 mt-8 font-medium text-xl">
-              <Link href="/about-us">About Us</Link>
-              <Link href="/blog">Blog</Link>
+              <Link href="/about-us">Om OSS</Link>
             </div>
           </SheetContent>
         </Sheet>
@@ -39,7 +38,6 @@ const Navbar = () => {
         <Link href="/about-us">
           <p>Om OSS</p>
         </Link>
-        <p>Blog</p>
       </div>
     </div>
   );

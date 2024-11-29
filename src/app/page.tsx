@@ -16,7 +16,7 @@ export default function Page() {
       <div className="md:w-1/2 max-sm:h-[50vh] relative">
         <Image
           className="object-cover"
-          src="/solar-photo.jpg"
+          src="/solar-house.webp"
           alt="Solar Panel photo"
           fill
         />

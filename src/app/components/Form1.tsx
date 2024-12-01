@@ -249,14 +249,6 @@ const Form1 = () => {
       {step === 2 && (
         <div>
           <div className="flex flex-col">
-            {progress < 30 && (
-              <p className="self-end text-primary text-[16px]">
-                You can do this!
-              </p>
-            )}
-            {progress > 30 && (
-              <p className="self-end text-primary text-[16px]">Nearly there</p>
-            )}
             <Progress className="[&>div]:bg-primary my-5" value={progress} />
           </div>
           <p className="text-[16px] font-medium mb-[31px]">
@@ -409,6 +401,7 @@ const Form1 = () => {
               onChange={(e) => setPhone(e.target.value)}
               required
               placeholder="+46"
+              type="number"
               className="rounded-[12px] h-[44px] border-[#CDD6DF]"
             />
           </div>

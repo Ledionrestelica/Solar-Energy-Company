@@ -33,7 +33,7 @@ const Form1 = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [progress, setProgress] = useState(0);
-
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const heroElement = document.getElementById("hero");
 
@@ -46,7 +46,7 @@ const Form1 = () => {
 
   function handleSubmit(e: any) {
     e.preventDefault();
-
+    setIsLoading(true);
     const formData = {
       "Vänligen välj vilken typ av anläggning det gäller?": option1,
       "Vad är du intresserad av?": option2,
@@ -69,10 +69,12 @@ const Form1 = () => {
     })
       .then((res) => {
         if (res.ok) {
+          setIsLoading(false);
           toast.success("Form submitted successfully!");
           router.push("/thank-you");
         } else {
           toast.error("Failed to send email.");
+          setIsLoading(true);
         }
       })
       .catch((err) => {
@@ -411,7 +413,7 @@ const Form1 = () => {
             disabled={!phone || !email || !name}
             className="w-full disabled:cursor-not-allowed disabled:opacity-50 py-3 rounded-full bg-primary text-white font-medium text-[16px]"
           >
-            Submit
+            {isLoading ? "Sending..." : "Submit"}
           </button>
         </div>
       )}

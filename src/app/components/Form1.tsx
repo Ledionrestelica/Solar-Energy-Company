@@ -339,11 +339,11 @@ const Form1 = () => {
           </RadioGroup>
           <button
             className={cn(
-              "w-full text-lg py-3 font-medium mt-6 rounded-full",
+              "w-full text-lg py-3 font-medium mt-6 rounded-full disabled:opacity-50",
               "bg-primary text-white"
             )}
             type="button"
-            disabled={!option3 || !option4 || !option5}
+            disabled={!option3 || !option4 || !option5 || !option6}
             onClick={() => setStep(3)}
           >
             NÄSTA
@@ -414,7 +414,9 @@ const Form1 = () => {
           </div>
           <button
             onClick={handleSubmit}
-            className="w-full py-3 rounded-full bg-primary text-white font-medium text-[16px]"
+            type="submit"
+            disabled={!phone || !email || !name}
+            className="w-full disabled:cursor-not-allowed disabled:opacity-50 py-3 rounded-full bg-primary text-white font-medium text-[16px]"
           >
             Submit
           </button>
